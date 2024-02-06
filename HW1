@@ -1,0 +1,360 @@
+%% Homework1
+% Yi Shen  U93947170  yishen@bu.edu
+
+clear
+close all
+clc
+
+
+FT=@(x) fftshift(fft2(ifftshift(x)));
+IFT=@(x) fftshift(ifft2(ifftshift(x)));
+%% Problem 1
+close all
+x = -2:0.01:1.99;
+y = -2:0.01:1.99;
+[X,Y] = meshgrid(x,y);
+f1 = cos(20*pi*X);
+f2 = cos(40*pi*Y);
+f3 = cos(20*pi*X+40*pi*Y);
+f4 = cos(20*pi*X)+ cos(40*pi*Y);
+figure
+subplot(1,4,1)
+imshow(f1)
+title('Signal cos(20 \pi x)')
+x_ticks = linspace(1, 400, 5);
+y_ticks = linspace(1, 400, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-2', '-1', '0', '1', '2'});
+yticklabels({'-2', '-1', '0', '1', '2'});
+xlabel('x')
+ylabel('y')
+axis on
+subplot(1,4,2)
+imshow(f2)
+title('Signal cos(40 \pi y)')
+x_ticks = linspace(1, 400, 5);
+y_ticks = linspace(1, 400, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-2', '-1', '0', '1', '2'});
+yticklabels({'-2', '-1', '0', '1', '2'});
+xlabel('x')
+ylabel('y')
+axis on
+subplot(1,4,3)
+imshow(f3)
+title('Signal cos(20 \pi x + 40 \pi y)')
+x_ticks = linspace(1, 400, 5);
+y_ticks = linspace(1, 400, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-2', '-1', '0', '1', '2'});
+yticklabels({'-2', '-1', '0', '1', '2'});
+xlabel('x')
+ylabel('y')
+axis on
+subplot(1,4,4)
+imshow(f4)
+title('Signal cos(20 \pi x) + cos(40 \pi y)')
+x_ticks = linspace(1, 400, 5);
+y_ticks = linspace(1, 400, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-2', '-1', '0', '1', '2'});
+yticklabels({'-2', '-1', '0', '1', '2'});
+xlabel('x')
+ylabel('y')
+axis on
+% i)
+
+% ii)
+
+F1 = fftshift(fft2(f1));
+F2 = fftshift(fft2(f2));
+F3 = fftshift(fft2(f3));
+F4 = fftshift(fft2(f4));
+fx = -50:0.25:49.75;
+fy = -50:0.25:49.75;
+[FX,FY] = meshgrid(fx,fy);
+figure
+subplot(1,4,1)
+% imshow(real(F1))
+mesh(FX,FY,log(real(F1)+1))
+title('DFT of cos(20 \pi x)')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(F(f_x,f_y))')
+x_ticks = linspace(-50, 49.75, 5);
+y_ticks = linspace(-50, 49.75, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-50', '-25', '0', '25', '50'});
+yticklabels({'-50', '-25', '0', '25', '50'});
+xlabel('f_x')
+ylabel('f_y')
+axis on
+subplot(1,4,2)
+mesh(FX,FY,log(real(F2)+1))
+title('DFT of cos(40 \pi y)')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(F(f_x,f_y))')
+x_ticks = linspace(-50, 49.75, 5);
+y_ticks = linspace(-50, 49.75, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-50', '-25', '0', '25', '50'});
+yticklabels({'-50', '-25', '0', '25', '50'});
+subplot(1,4,3)
+mesh(FX,FY,log(real(F3)+1))
+title('DFT of cos(20 \pi x + 40 \pi y)')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(F(f_x,f_y))')
+x_ticks = linspace(-50, 49.75, 5);
+y_ticks = linspace(-50, 49.75, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-50', '-25', '0', '25', '50'});
+yticklabels({'-50', '-25', '0', '25', '50'});
+subplot(1,4,4)
+mesh(FX,FY,log(real(F4)+1))
+title('DFT of cos(20 \pi x) + cos(40 \pi y)')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(F(f_x,f_y))')
+x_ticks = linspace(-50, 49.75, 5);
+y_ticks = linspace(-50, 49.75, 5);
+xticks(x_ticks);
+yticks(y_ticks);
+xticklabels({'-50', '-25', '0', '25', '50'});
+yticklabels({'-50', '-25', '0', '25', '50'});
+% for m = 1:400
+%     for n = 1:400
+%         F0 = 0;
+%         for a = 1:400
+%             for b = 1:400
+%                 F0 = F0 + f1(a,b)*exp(-2*pi*1i*(a*n/400+b*m/400));
+%             end
+%         end
+%         F1(m,n) = F0;
+%     end
+%     m
+% end
+% iii)
+
+
+
+
+
+%% Problem 2
+close all
+x = -50:1:49;
+y = -50:1:49;
+[X, Y] = meshgrid(x, y);
+
+f = zeros(length(x), length(y));
+points = [0, 0; 5, 0; 0, 5; -48, 0; 0, 48; 48, 48];
+for i = 1:size(points, 1)
+    f(X == points(i, 1) & Y == points(i, 2)) = 1;
+end
+figure
+subplot(1,3,1)
+imshow(f)
+title('f')
+
+
+h = sqrt(X.^2 + Y.^2) <= 15/2;
+subplot(1,3,2)
+imshow(h)
+title('h')
+
+% (a)
+g = conv2(f, h);
+subplot(1,3,3)
+imshow(g,[])
+colormap("gray")
+title('g=f*h')
+
+% (b)
+F = FT(f);
+H = FT(h);
+%figure
+%imshow(real(F))
+%figure
+%imshow(real(H))
+
+
+
+
+G = F.*H;
+g2 = IFT(G);
+figure
+imshow(real(g2),[])
+axis image
+colormap("gray")
+title('Compute the convolution by using the DFT')
+
+% (d)
+F = fftshift(fft2(f,200,200));
+H = fftshift(fft2(h,200,200));
+figure
+imshow(real(F))
+figure
+imshow(real(H))
+
+
+
+
+G = F.*H;
+g2 = ifft2(ifftshift(G));
+figure
+imshow(real(g2),[])
+colormap("gray")
+title('Compute the convolution by using the “zero-padding” DFT')
+
+
+%% Problem 3
+close all
+Highpass = zeros(512,512);
+Lowpass = zeros(512,512);
+for n = 1:512
+    for m = 1:512
+        if (n-513/2)^2+(m-513/2)^2<100^2
+            Lowpass(n,m) = 1;
+        elseif (n-513/2)^2+(m-513/2)^2>100^2
+            Highpass(n,m) = 1;
+        end
+    end
+end
+figure
+subplot(1,2,1)
+imshow(Lowpass)
+title('Lowpass frequency filter')
+subplot(1,2,2)
+imshow(Highpass)
+title('Highpass frequency filter')
+cat = imread("cat_512.png");
+cat = rgb2gray(cat);
+
+CAT = fftshift(fft2(ifftshift(cat)));
+CAT_L = CAT.*Lowpass;
+CAT_H = CAT.*Highpass;
+cat_l = fftshift(ifft2(ifftshift(CAT_L)));
+cat_h = fftshift(ifft2(ifftshift(CAT_H)));
+figure
+subplot(2,3,1)
+imagesc(log(abs(real(CAT))+1))
+colormap("gray")
+axis image
+axis off
+title('Fourier transform of the original image')
+subplot(2,3,4)
+imagesc(cat)
+colormap("gray")
+axis image
+axis off
+title('Original image')
+
+subplot(2,3,2)
+imagesc(log(abs(real(CAT_L))+1))
+colormap("gray")
+axis image
+axis off
+title('Fourier transform of the lowpass image')
+subplot(2,3,5)
+imagesc(real(cat_l))
+colormap("gray")
+axis image
+axis off
+title('Lowpass image')
+
+subplot(2,3,3)
+imagesc(log(abs(real(CAT_H))+1))
+colormap("gray")
+axis image
+axis off
+title('Fourier transform of the highpass image')
+subplot(2,3,6)
+imagesc(real(cat_h))
+colormap("gray")
+axis image
+axis off
+title('Highpass image')
+
+
+
+%% Problem 4
+x = -2:0.01:1.99;
+y = -2:0.01:1.99;
+[X,Y] = meshgrid(x,y);
+f = cos(20*pi*X);
+
+% (a)
+
+F = fftshift(fft2(f));
+figure
+subplot(1,2,1)
+imshow(f)
+subplot(1,2,2)
+imshow(F)
+
+
+%(b)
+n = 0.2*randn(size(f));
+fn = f + n;
+FN = fftshift(fft2(fn));
+figure
+subplot(2,2,1)
+imshow(f,[-1,1])
+title('f without noise')
+subplot(2,2,2)
+imshow(fn,[-1,1])
+title('f with noise')
+subplot(2,2,3)
+mesh(X,Y,log(abs(real(F))+1))
+title('DFT of f without noise')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(F(f_x,f_y))')
+
+axis on
+subplot(2,2,4)
+mesh(X,Y,log(abs(real(FN))+1))
+title('DFT of fn with noise')
+xlabel('f_x')
+ylabel('f_y')
+zlabel('log(FN(f_x,f_y))')
+xlabel('f_x')
+ylabel('f_y')
+axis on
+%(c)
+P_S = abs(sum(f.^2));
+P_N = abs(sum(n.^2));
+SNR = P_S/P_N;
+disp(SNR)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
